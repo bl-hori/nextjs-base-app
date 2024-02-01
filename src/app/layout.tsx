@@ -2,6 +2,9 @@ import "@/app/globals.css";
 import { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 
+import { Providers } from "@/components/providers";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
+
 import { cn } from "@/lib/utils";
 
 const fontSans = FontSans({
@@ -29,14 +32,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ja" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable,
         )}
       >
-        {children}
+        <Providers
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex min-h-screen flex-col">
+            <main className="flex flex-1 flex-col bg-muted/50">{children}</main>
+          </div>
+          <TailwindIndicator />
+        </Providers>
       </body>
     </html>
   );
